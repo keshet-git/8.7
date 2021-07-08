@@ -1,0 +1,63 @@
+# import logo from=
+# import ".App.css"
+#
+# let App_ID = 3c29f155
+# let App_KEY = 51273edd95cf3efae15a13d9c5a3efe3
+
+# avoid = input("what the ingredients you shold avoid? You can insert more than one")
+# print(avoid)
+import requests
+import json
+
+
+def run():
+    sentenc = input("What kind of dish would you like to prepare?")
+
+    foodCategory = {"1": "salad", "2": "fish", "3": "soup", 4: "unsweetened pie", 5: "filled pastry", 6: "meat",
+                    7: "chke", 8: "cookie & biscuit", 9: "pancake"}
+    print(sentenc)
+
+    avoid = input("what the ingredients you shold avoid? You can insert more than one")
+    digits_mapping_avoid = {"1": "peanut", "2": "egg", "3": "milk", "4": "walnut", "5": "Pork", "6": "apricot",
+                            "7": "sesame"}
+    print(digits_mapping_avoid)
+    print(avoid)
+
+    # pot the choice in the requests
+    requests1 = ("I want a recipe for a 'sentenc' ,'avoid'-free")
+    # pot the choice in the url
+    # url = https://www.edamam.com/results/recipe/?3c23c29f1559f155-'sentenc'-51273edd95cf3efae15a13d9c5a3efe3/search='sentenc'+without%20'avoid'
+    url = 'https://api.edamam.com/search'
+    # pot the url in the requests.requests
+    # pot the choice in the querystring
+    querystring = {"q": f"I want a recipe for a {sentenc} ,{avoid}-free"}
+
+    headers = {
+        'x-rapidapi-key': "51273edd95cf3efae15a13d9c5a3efe3",
+        'x-rapidapi-host': "webknox-recipes.3c23c29f1559f155.rapidapi.com"
+    }
+    # pot the choice in the get
+    get = f"recipe for a {sentenc} ,{avoid}-free"
+
+    Keshet_id = '3c29f155'
+    keshet_key = '51273edd95cf3efae15a13d9c5a3efe3'
+
+    query = {
+        'app_id': Keshet_id,
+        'app_key': keshet_key,
+        'q': sentenc,
+        'health': f'{avoid}-free'
+    }
+
+    response = requests.request(
+        'GET', url, params=query
+    )
+
+    with open('/home/keshet/Personal/shecodes/keshet/response.json', 'w') as outfile:
+        json.dump(response.json(), outfile)
+
+    # print(response.json())
+
+
+if __name__ == '__main__':
+    run()
